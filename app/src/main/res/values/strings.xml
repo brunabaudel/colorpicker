@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ColorPicker</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+
+    <!-- Colors -->
+
+    <string name="cyan">Cyan: 0</string>
+    <string name="magenta">Magenta: 0</string>
+    <string name="yellow">Yellow: 0</string>
+    <string name="key">Key: 0</string>
+
+</resources>
