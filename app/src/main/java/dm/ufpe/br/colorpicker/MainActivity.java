@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -26,6 +28,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +54,7 @@ public class MainActivity extends Activity implements View.OnTouchListener, View
     private ImageButton btn_camera;
 
     private FrameLayout frame_color1;
+    private LinearLayout color_icon;
 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private Uri fileUri;
@@ -81,6 +85,7 @@ public class MainActivity extends Activity implements View.OnTouchListener, View
         this.btn_camera = (ImageButton) findViewById(R.id.btn_camera);
 
         this.frame_color1 = (FrameLayout) findViewById(R.id.frame_color1);
+        this.color_icon = (LinearLayout) findViewById(R.id.color_icon);
 
         this.image.setImageResource(R.drawable.flor);
 
@@ -138,22 +143,25 @@ public class MainActivity extends Activity implements View.OnTouchListener, View
 
            this.frame_color.setBackgroundColor(Color.rgb(this.red, this.green, this.blue));
 
-           this.frame_color1.setX(x+140);
-           this.frame_color1.setY(y-40);
+           this.frame_color1.setX(x + this.image.getX() - 75);
+           this.frame_color1.setY(y-this.image.getY() - 100);
 
-           this.frame_color1.setBackgroundColor(Color.rgb(this.red, this.green, this.blue));
-
+          // this.frame_color1.setBackgroundColor(Color.rgb(this.red, this.green, this.blue));
+           this.color_icon.setBackgroundColor(Color.rgb(this.red, this.green, this.blue));
+/*
            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                this.frame_color1.setVisibility(View.INVISIBLE);
            } else {
                this.frame_color1.setVisibility(View.VISIBLE);
            }
-
+*/
+           this.frame_color1.setVisibility(View.VISIBLE);
        }
 
         bitmap.recycle();
         return false;
     }
+
 
     /**
      *

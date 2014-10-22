@@ -16,21 +16,37 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
             android:src="@drawable/flor"
             android:clickable="true"
             android:focusable="true"
             android:layout_centerHorizontal="true"
             android:focusableInTouchMode="true"
             android:scaleType="fitXY"
-            android:id="@+id/img_color" />
+            android:id="@+id/img_color"/>
 
         <FrameLayout
             android:id="@+id/frame_color1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@color/black"
+            android:layout_width="100dip"
+            android:layout_height="100dip"
             android:visibility="invisible">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:id="@+id/color_icon"
+                android:layout_marginTop="17dip"
+                android:layout_marginBottom="45dip"
+                android:layout_marginLeft="26dip"
+                android:layout_marginRight="26dip"
+                ></LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icone"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerInside"
+                android:id="@+id/img_icon"/>
         </FrameLayout>
 
         <ImageButton
@@ -41,7 +57,7 @@
             android:scaleType="fitXY"
             android:layout_alignParentBottom="true"
             android:layout_alignRight="@id/img_color"
-             />
+            />
 
         <FrameLayout
             android:id="@+id/frame_color"
