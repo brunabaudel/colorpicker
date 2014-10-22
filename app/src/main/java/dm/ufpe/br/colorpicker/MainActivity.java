@@ -21,10 +21,12 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +50,8 @@ public class MainActivity extends Activity implements View.OnTouchListener, View
     private FrameLayout frame_color;
     private ImageButton btn_camera;
 
+    private FrameLayout frame_color1;
+
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private Uri fileUri;
 
@@ -58,7 +62,7 @@ public class MainActivity extends Activity implements View.OnTouchListener, View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initialize();
+        this.initialize();
     }
 
     private void initialize() {
@@ -75,6 +79,8 @@ public class MainActivity extends Activity implements View.OnTouchListener, View
         this.image = (ImageView) findViewById(R.id.img_color);
         this.frame_color = (FrameLayout) findViewById(R.id.frame_color);
         this.btn_camera = (ImageButton) findViewById(R.id.btn_camera);
+
+        this.frame_color1 = (FrameLayout) findViewById(R.id.frame_color1);
 
         this.image.setImageResource(R.drawable.flor);
 
@@ -95,6 +101,12 @@ public class MainActivity extends Activity implements View.OnTouchListener, View
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void setFinishOnTouchOutside(boolean finish) {
+        super.setFinishOnTouchOutside(finish);
+        this.frame_color1.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -120,12 +132,25 @@ public class MainActivity extends Activity implements View.OnTouchListener, View
            this.txt_yellow.setText("Yellow: " + this.getYellow()+"");
            this.txt_key.setText("Key: " + this.getKey()+"");
 
-           Log.i("COLOR", "Pixel: " + pixel);
-           Log.i("COLOR", "R: " + this.red + " G: " + this.green + " B: " + this.blue);
+          // Log.i("COLOR", "Pixel: " + pixel);
+           //Log.i("COLOR", "R: " + this.red + " G: " + this.green + " B: " + this.blue);
+           Log.i("POSITION", "x: " + x + " y: " + y);
 
            this.frame_color.setBackgroundColor(Color.rgb(this.red, this.green, this.blue));
 
+           this.frame_color1.setX(x+140);
+           this.frame_color1.setY(y-40);
+
+           this.frame_color1.setBackgroundColor(Color.rgb(this.red, this.green, this.blue));
+
+           if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+               this.frame_color1.setVisibility(View.INVISIBLE);
+           } else {
+               this.frame_color1.setVisibility(View.VISIBLE);
+           }
+
        }
+
         bitmap.recycle();
         return false;
     }
