@@ -26,7 +26,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.File;
-import java.text.DecimalFormat;
 
 public class MainActivity extends Activity implements View.OnTouchListener, View.OnClickListener {
 
@@ -129,42 +128,43 @@ public class MainActivity extends Activity implements View.OnTouchListener, View
            this.convertToCMYK.set_green(green);
            this.convertToCMYK.set_blue(blue);
 
-           this.txt_cyan.setText("Cyan: " + this.convertToCMYK.getCyan()+"");
-           this.txt_magenta.setText("Magenta: " + this.convertToCMYK.getMagenta()+"");
-           this.txt_yellow.setText("Yellow: " + this.convertToCMYK.getYellow()+"");
-           this.txt_key.setText("Key: " + this.convertToCMYK.getKey()+"");
+           this.fillTextViews();
 
           // Log.i("COLOR", "Pixel: " + pixel);
            //Log.i("COLOR", "R: " + this.red + " G: " + this.green + " B: " + this.blue);
            Log.i("POSITION", "x: " + x + " y: " + y);
 
-           this.frame_color.setBackgroundColor(Color.rgb(red, green, blue));
+           float framePositionY = (int)y-this.image.getY() - 100;
+           float framePositionX = (int)x + this.image.getX() - 75;
 
-           this.frame_color1.setX(x + this.image.getX() - 75);
-           this.frame_color1.setY(y-this.image.getY() - 100);
+           if(framePositionY <= 10) {
+               frame_color1.setRotation(180.0f);
+               this.frame_color1.setX(framePositionX);
+               this.frame_color1.setY(framePositionY + this.frame_color1.getHeight());
 
-           this.color_icon.setBackgroundColor(Color.rgb(red, green, blue));
-/*
-           if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-               this.frame_color1.setVisibility(View.INVISIBLE);
            } else {
-               this.frame_color1.setVisibility(View.VISIBLE);
+               frame_color1.setRotation(0.0f);
+               this.frame_color1.setX(framePositionX);
+               this.frame_color1.setY(framePositionY);
            }
 
+           this.frame_color.setBackgroundColor(Color.rgb(red, green, blue));
+           this.color_icon.setBackgroundColor(Color.rgb(red, green, blue));
 
-           if(this.relative.getHeight()-this.image.getHeight() <= x + this.image.getX() - 75+this.frame_color1.getHeight()) {
-               Animation rotateAnim = AnimationUtils.loadAnimation(this, R.anim.rotate_layout);
-               LayoutAnimationController animController = new LayoutAnimationController(rotateAnim, 0);
-               frame_color1.setLayoutAnimation(animController);
-              // color_icon.setY(y+this.image.getY() - 100);
+           Log.i("ALTURA", "x: " + framePositionX);
 
-           }
-*/
            this.frame_color1.setVisibility(View.VISIBLE);
        }
 
         bitmap.recycle();
         return false;
+    }
+
+    private void fillTextViews() {
+        this.txt_cyan.setText("Cyan: " + this.convertToCMYK.getCyan()+"");
+        this.txt_magenta.setText("Magenta: " + this.convertToCMYK.getMagenta()+"");
+        this.txt_yellow.setText("Yellow: " + this.convertToCMYK.getYellow()+"");
+        this.txt_key.setText("Key: " + this.convertToCMYK.getKey()+"");
     }
 
     /**
