@@ -1,4 +1,4 @@
-package dm.ufpe.br.colorpicker;
+package br.ufpe.dm.colorpicker;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

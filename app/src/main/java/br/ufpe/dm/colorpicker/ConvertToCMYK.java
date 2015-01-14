@@ -1,4 +1,4 @@
-package dm.ufpe.br.colorpicker;
+package br.ufpe.dm.colorpicker;
 
 import android.content.Context;
 
@@ -46,22 +46,22 @@ public class ConvertToCMYK {
 
     public String getKey() {
         double k = calcKey() * 100;
-        return new DecimalFormat("#.##").format(k);
+        return new DecimalFormat("#").format(k);
     }
 
     public String getCyan() {
         double c = (1 - get_red() - calcKey()) / (1 - calcKey()) * 100;
-        return new DecimalFormat("#.##").format(c);
+        return new DecimalFormat("#").format(c);
     }
 
     public String getMagenta() {
         double m = (1 - get_green() - calcKey()) / (1 - calcKey()) * 100;
-        return new DecimalFormat("#.##").format(m);
+        return new DecimalFormat("#").format(m);
     }
 
     public String getYellow() {
         double y = (1 - get_blue() - calcKey()) / (1 - calcKey()) * 100;
-        return new DecimalFormat("#.##").format(y);
+        return new DecimalFormat("#").format(y);
     }
 
     private double maxRGB(){
@@ -71,4 +71,6 @@ public class ConvertToCMYK {
     private double calcKey() {
         return 1 - maxRGB();
     }
+
+
 }

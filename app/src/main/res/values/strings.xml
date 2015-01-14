@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ColorPicker</string>
+    <string name="app_name">Color Picker</string>
+    <string name="app_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
 
     <!-- Colors -->
 
-    <string name="cyan">Cyan: 0</string>
-    <string name="magenta">Magenta: 0</string>
-    <string name="yellow">Yellow: 0</string>
-    <string name="key">Key: 0</string>
+    <string name="cyan">Cyan:</string>
+    <string name="magenta">Magenta:</string>
+    <string name="yellow">Yellow:</string>
+    <string name="key">Key:</string>
+    <string name="initial">0</string>
+
+    <!-- Bluetooth -->
+
+    <string name="send">Send</string>
 
 </resources>
