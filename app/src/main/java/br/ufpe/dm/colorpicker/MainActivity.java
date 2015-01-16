@@ -36,6 +36,10 @@ import java.util.UUID;
 
 public class MainActivity extends ActionBarActivity implements View.OnTouchListener, View.OnClickListener {
 
+    int red = 0;
+    int green = 0;
+    int blue = 0;
+
     private ConvertToCMYK convertToCMYK;
 
     private EditText edt_cyan;
@@ -144,15 +148,15 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
         this.frame_color1.setVisibility(View.INVISIBLE);
     }
 
+
+
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
 
         int x = (int)motionEvent.getX();
         int y = (int)motionEvent.getY();
 
-        int red = 0;
-        int green = 0;
-        int blue = 0;
+
         int pixel = 0;
 
         this.bitmap = Bitmap.createBitmap(image.getWidth(), image.getHeight(), Bitmap.Config.RGB_565);
@@ -272,32 +276,37 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
 
         String cyanStr = edt_cyan.getText().toString();
         String magentaStr = edt_magenta.getText().toString();
+        String yellowStr = edt_yellow.getText().toString();
+        String keyStr = edt_key.getText().toString();
 
         Log.d("Debug", "Magenta " + edt_magenta.getText().toString());
         Log.d("Debug", "Cyan " + edt_cyan.getText().toString());
 
         int cyan = Integer.parseInt(edt_cyan.getText().toString());
         int magenta = Integer.parseInt(edt_magenta.getText().toString());
+        int yellow = Integer.parseInt(edt_yellow.getText().toString());
+        int key = Integer.parseInt(edt_key.getText().toString());
 
         Log.d("Debug", "Magenta " + magenta);
         Log.d("Debug", "Cyan " + cyan);
-
+        Log.d("Debug", "Yellow " + yellow);
+        Log.d("Debug", "key " + key);
 
         int check = 0;
         mConnectedThread.write("105");
         //mConnectedThread.write("3");    // Send "0" via Bluetooth
         //mConnectedThread.write("3");
 
-        mConnectedThread.write(cyanStr);
-        mConnectedThread.write(magentaStr);
-        mConnectedThread.write("1");
-        mConnectedThread.write("0");
+        mConnectedThread.write(cyanStr); //cyan
+        mConnectedThread.write(magentaStr); //magenta
+        mConnectedThread.write(yellowStr); //yellow
+        mConnectedThread.write(keyStr); //Key
 
-        mConnectedThread.write("0");
-        mConnectedThread.write("0");
-        mConnectedThread.write("0");
-        mConnectedThread.write("0");
-        check = ((int) (cyan+magenta+1) / 8);
+        mConnectedThread.write("0"); //Water
+        mConnectedThread.write(""+red); //Red
+        mConnectedThread.write(""+green); //Green
+        mConnectedThread.write(""+blue); //Blue
+        check = ((int) (cyan+magenta+yellow+key+0/*water*/+red+green+blue) / 8);
         Log.d("Debug", "Check " + check);
         mConnectedThread.write("" + check);
     }

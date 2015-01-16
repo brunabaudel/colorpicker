@@ -89,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="30sp"
+
                     android:text="@string/cyan"/>
             <EditText
                 android:layout_width="match_parent"
@@ -97,7 +97,7 @@
                 android:layout_marginLeft="2dp"
                 android:text="@string/initial"
                 android:id="@+id/txt_cyan"
-                android:textSize="40sp"
+
                 android:background="#00000000"
                 android:maxLines="1"
                 android:layout_weight="42" />
@@ -112,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="30sp"
+
                     android:text="@string/magenta"/>
                 <EditText
                     android:layout_width="match_parent"
@@ -120,7 +120,7 @@
                     android:layout_marginLeft="2dp"
                     android:text="@string/initial"
                     android:id="@+id/txt_magenta"
-                    android:textSize="40sp"
+
                     android:maxLines="1"
                     android:background="#00000000"/>
             </LinearLayout>
@@ -134,7 +134,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="30sp"
+
                     android:text="@string/yellow"/>
                 <EditText
                     android:layout_width="match_parent"
@@ -142,7 +142,7 @@
                     android:layout_marginLeft="2dp"
                     android:text="@string/initial"
                     android:id="@+id/txt_yellow"
-                    android:textSize="40sp"
+
                     android:maxLines="1"
                     android:background="#00000000"/>
             </LinearLayout>
@@ -156,7 +156,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
-                    android:textSize="30sp"
+
                     android:textColor="@color/black"
                     android:text="@string/key"/>
                 <EditText
@@ -165,7 +165,7 @@
                     android:layout_marginLeft="2dp"
                     android:text="@string/initial"
                     android:id="@+id/txt_key"
-                    android:textSize="40sp"
+
                     android:maxLines="1"
                     android:background="#00000000"/>
             </LinearLayout>
