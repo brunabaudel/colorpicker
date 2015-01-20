@@ -30,6 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.UUID;
@@ -258,7 +259,24 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                this.image.setImageDrawable(Drawable.createFromPath(data.getData().getPath()));
+
+                Bitmap bitmap = null;
+                try {
+                    GetImageThumbnail getImageThumbnail = new GetImageThumbnail();
+                    bitmap = getImageThumbnail.getThumbnail(fileUri, this);
+                } catch (FileNotFoundException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+
+                // Setting image image icon on the imageview
+               // this.image.setImageDrawable(Drawable.createFromPath(data.getData().getPath()));
+                this.image.setImageBitmap(bitmap);
+
+
             } else if (resultCode == RESULT_CANCELED) {
             } else {
                 //Toast.makeText(this, "Captura falhou", Toast.LENGTH_LONG).show();
@@ -286,6 +304,9 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
         int magenta = Integer.parseInt(edt_magenta.getText().toString());
         int yellow = Integer.parseInt(edt_yellow.getText().toString());
         int key = Integer.parseInt(edt_key.getText().toString());
+        
+        //calcula água
+        int water = calcWater(cyan,magenta,yellow,key);
 
         Log.d("Debug", "Magenta " + magenta);
         Log.d("Debug", "Cyan " + cyan);
@@ -302,16 +323,34 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
         mConnectedThread.write(yellowStr); //yellow
         mConnectedThread.write(keyStr); //Key
 
-        mConnectedThread.write("0"); //Water
+        mConnectedThread.write(""+water); //Water
         mConnectedThread.write(""+red); //Red
         mConnectedThread.write(""+green); //Green
         mConnectedThread.write(""+blue); //Blue
-        check = ((int) (cyan+magenta+yellow+key+0/*water*/+red+green+blue) / 8);
+        check = ((int) (cyan+magenta+yellow+key+water+red+green+blue) / 8);
         Log.d("Debug", "Check " + check);
         mConnectedThread.write("" + check);
     }
 
+    private int calcWater(int cyan, int magenta, int yellow, int key) {
+        int water = 0;
 
+        if(key==0)
+        {
+            //então temos que add água, solução mais clara que cor padrão forte
+            water = getMAX(cyan,magenta,yellow);
+        }
+
+        return water;
+    }
+
+    private int getMAX(int cyan, int magenta, int yellow)
+    {
+        int max = cyan>magenta?cyan:magenta;
+        max = max>yellow?max:yellow;
+
+        return max;
+    }
 
 
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
