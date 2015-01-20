@@ -297,8 +297,6 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
         String yellowStr = edt_yellow.getText().toString();
         String keyStr = edt_key.getText().toString();
 
-        Log.d("Debug", "Magenta " + edt_magenta.getText().toString());
-        Log.d("Debug", "Cyan " + edt_cyan.getText().toString());
 
         int cyan = Integer.parseInt(edt_cyan.getText().toString());
         int magenta = Integer.parseInt(edt_magenta.getText().toString());
@@ -312,6 +310,8 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
         Log.d("Debug", "Cyan " + cyan);
         Log.d("Debug", "Yellow " + yellow);
         Log.d("Debug", "key " + key);
+        Log.d("Debug", "water " + water);
+
 
         int check = 0;
         mConnectedThread.write("105");
@@ -338,7 +338,7 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
         if(key==0)
         {
             //então temos que add água, solução mais clara que cor padrão forte
-            water = getMAX(cyan,magenta,yellow);
+            water = 100 - getMAX(cyan,magenta,yellow);
         }
 
         return water;
