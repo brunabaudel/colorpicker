@@ -47,6 +47,7 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
     private EditText edt_magenta;
     private EditText edt_yellow;
     private EditText edt_key;
+    private ImageButton btn_init_img;
 
     //Camera
 
@@ -105,6 +106,7 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
         this.edt_magenta = (EditText) findViewById(R.id.txt_magenta);
         this.edt_yellow = (EditText) findViewById(R.id.txt_yellow);
         this.edt_key = (EditText) findViewById(R.id.txt_key);
+        this.btn_init_img = (ImageButton) findViewById(R.id.btn_init_img);
 
         this.image = (ImageView) findViewById(R.id.img_color);
         this.frame_color = (FrameLayout) findViewById(R.id.frame_color);
@@ -116,11 +118,12 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
 
         this.btn_enviar = (Button) findViewById(R.id.btn_enviar);
 
-        this.image.setImageResource(R.drawable.flor);
+        this.image.setImageResource(R.drawable.colormap);
 
         this.image.setOnTouchListener(this);
         this.btn_camera.setOnClickListener(this);
         this.btn_enviar.setOnClickListener(this);
+        this.btn_init_img.setOnClickListener(this);
     }
 
     private void editTextChanged() {
@@ -219,6 +222,9 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
     public void onClick(View view) {
 
         switch (view.getId()) {
+            case R.id.btn_init_img:
+                setToInitImage();
+                break;
             case R.id.btn_camera:
                 camera();
                 break;
@@ -230,6 +236,10 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
                 break;
         }
 
+    }
+
+    private void setToInitImage() {
+        this.image.setImageResource(R.drawable.colormap);
     }
 
     /**
