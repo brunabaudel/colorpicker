@@ -7,7 +7,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,7 +18,6 @@ import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -93,7 +93,7 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
 
         this.initHandler();
 
-        this.btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
+        this.btAdapter = BluetoothAdapter.getDefaultAdapter();
         this.checkBTState();
     }
 
@@ -118,7 +118,7 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
 
         this.btn_enviar = (Button) findViewById(R.id.btn_enviar);
 
-        this.image.setImageResource(R.drawable.colormap);
+        this.image.setImageResource(R.drawable.color_map);
 
         this.image.setOnTouchListener(this);
         this.btn_camera.setOnClickListener(this);
@@ -126,24 +126,10 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
         this.btn_init_img.setOnClickListener(this);
     }
 
-    private void editTextChanged() {
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            Intent i = new Intent(this, Settings.class);
-            startActivity(i);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -151,8 +137,6 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
         super.setFinishOnTouchOutside(finish);
         this.frame_color1.setVisibility(View.INVISIBLE);
     }
-
-
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -239,7 +223,7 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
     }
 
     private void setToInitImage() {
-        this.image.setImageResource(R.drawable.colormap);
+        this.image.setImageResource(R.drawable.color_map);
     }
 
     /**
@@ -271,9 +255,19 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
             if (resultCode == RESULT_OK) {
 
                 Bitmap bitmap = null;
+                Bitmap rotatedBitmap = null;
                 try {
+
                     GetImageThumbnail getImageThumbnail = new GetImageThumbnail();
                     bitmap = getImageThumbnail.getThumbnail(fileUri, this);
+
+                    ExifInterface exif = new ExifInterface(fileUri+"");
+                    int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                    Matrix matrix = new Matrix();
+                    matrix.postRotate(90);
+                    rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+
+
                 } catch (FileNotFoundException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
@@ -282,9 +276,7 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
                     e1.printStackTrace();
                 }
 
-                // Setting image image icon on the imageview
-               // this.image.setImageDrawable(Drawable.createFromPath(data.getData().getPath()));
-                this.image.setImageBitmap(bitmap);
+                this.image.setImageBitmap(rotatedBitmap);
 
 
             } else if (resultCode == RESULT_CANCELED) {
@@ -349,6 +341,8 @@ public class MainActivity extends ActionBarActivity implements View.OnTouchListe
         {
             //então temos que add água, solução mais clara que cor padrão forte
             water = 100 - getMAX(cyan,magenta,yellow);
+        } else if (cyan == 0 && magenta == 0 && yellow == 0) {
+            water = 100 - key;
         }
 
         return water;

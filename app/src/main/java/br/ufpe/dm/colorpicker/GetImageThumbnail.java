@@ -9,9 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by Leonardo on 20/01/2015.
- */
 public class GetImageThumbnail {
 
     private static int getPowerOfTwoForSampleRatio(double ratio) {
